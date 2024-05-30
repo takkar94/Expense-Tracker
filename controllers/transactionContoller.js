@@ -52,8 +52,9 @@ exports.addTransaction = async (req, res, next) => {
 // @route   DELETE /api/v1/transactions/:id
 exports.deleteTransaction = async (req, res, next) => {
   try {
-    const transaction = await Transaction.findById(req.params.id);
-
+    const transaction = await Transaction.findByIdAndDelete(req.params.id);
+    console.log(req.params.id)
+    console.log(transaction)
     if(!transaction) {
       return res.status(404).json({
         success: false,
@@ -61,7 +62,7 @@ exports.deleteTransaction = async (req, res, next) => {
       });
     }
 
-    await transaction.remove();
+    //await transaction.remove();
 
     return res.status(200).json({
       success: true,
@@ -71,7 +72,7 @@ exports.deleteTransaction = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       success: false,
-      error: 'Server Error'
+      error: err.message
     });
   }
 }
