@@ -53,8 +53,6 @@ exports.addTransaction = async (req, res, next) => {
 exports.deleteTransaction = async (req, res, next) => {
   try {
     const transaction = await Transaction.findByIdAndDelete(req.params.id);
-    console.log(req.params.id)
-    console.log(transaction)
     if(!transaction) {
       return res.status(404).json({
         success: false,
